@@ -1,0 +1,1689 @@
+{
+  "run_name": "optimal_steps_15_nvfp4_torch_compile_vae_bf16_no_watermark",
+  "created": "2026-09-16T12:59:59",
+  "model": {
+    "class": "SDXLOptimalStepsNVFP4FastVAE",
+    "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
+    "dtype": "float16",
+    "timesteps": [
+      981,
+      961,
+      941,
+      901,
+      861,
+      821,
+      781,
+      741,
+      681,
+      621,
+      521,
+      381,
+      241,
+      121,
+      41
+    ],
+    "schedule_source": "optimal_steps_sdxl_base_50to15.json",
+    "nvfp4": {
+      "config": "NVFP4DynamicActivationNVFP4WeightConfig(use_dynamic_per_tensor_scale=True, use_triton_kernel=True)",
+      "scope": "unet nn.Linear, min(in, out) >= 1024, skipping attn2.to_k, attn2.to_v, time_emb_proj, proj_in, time_embedding., add_embedding.",
+      "weights_quantized_from": "bfloat16",
+      "activations": "cast fp16 -> bf16 before each quantized linear, output cast back to fp16",
+      "quantized_layers": 486
+    },
+    "smash_config": {
+      "torch_compile": true,
+      "torch_compile_mode": "max-autotune-no-cudagraphs"
+    },
+    "smash_config_resolved": "SmashConfig(\n  torch_compile\n      backend: 'inductor',\n      dynamic: None,\n      fullgraph: False,\n      make_portable: False,\n      max_kv_cache_size: 400,\n      mode: 'max-autotune-no-cudagraphs',\n      seqlen_manual_cuda_graph: 100,\n      target: 'model',\n)",
+    "vae_decode_compile_mode": "max-autotune-no-cudagraphs",
+    "vae_decode_dtype": "bfloat16",
+    "watermark": false
+  },
+  "reference": "sdxl_base",
+  "host": "nc-10-3-3",
+  "gpu": "NVIDIA GeForce RTX 5080",
+  "seed": 0,
+  "warnings": [],
+  "metrics": {
+    "lpips": {
+      "mean": 0.31702811062335967,
+      "std": 0.09608577181794958,
+      "min": 0.20428866147994995,
+      "max": 0.6146146059036255
+    },
+    "psnr": {
+      "mean": 21.298166341645835,
+      "std": 2.7817518288672005,
+      "min": 15.421304614804976,
+      "max": 26.63797695038695
+    },
+    "dreamsim": {
+      "mean": 0.09368174791336059,
+      "std": 0.08073235161635194,
+      "min": 0.03094625473022461,
+      "max": 0.3830670714378357
+    },
+    "identical_pairs": 0
+  },
+  "timings_mean_ms": {
+    "text_encoder_ms": 2.155664922320284,
+    "text_encoder_2_ms": 4.688766417675652,
+    "unet_total_ms": 1502.5181870628148,
+    "unet_step_median_ms": 100.03399269946385,
+    "vae_decode_ms": 132.3580553184729,
+    "other_ms": 13.476284877979197,
+    "total_ms": 1655.1969585992629
+  },
+  "reference_timings_mean_ms": {
+    "text_encoder_ms": 2.418963024392724,
+    "text_encoder_2_ms": 4.629712179303169,
+    "unet_total_ms": 7649.361504693516,
+    "unet_step_median_ms": 152.51494360622019,
+    "vae_decode_ms": 352.0515383547172,
+    "other_ms": 70.07586025167257,
+    "total_ms": 8078.537578503601
+  },
+  "speedup": 4.88071074353604,
+  "images": [
+    {
+      "file": "images/000.png",
+      "prompt": "an beautiful woman angel with a halo, long white gown with gold accessories, floating in the sky illuminated with shades of gilt ,art , full screen, use bright colors use monet, leonardo da vinci and botticelli style, ",
+      "metrics": {
+        "lpips": 0.2630094885826111,
+        "psnr": 24.60412853991577,
+        "dreamsim": 0.0433429479598999
+      },
+      "timings": {
+        "text_encoder_ms": 2.231413993285969,
+        "text_encoder_2_ms": 4.769751976709813,
+        "unet_step_ms": [
+          102.59107701131143,
+          100.88415100472048,
+          100.14302798663266,
+          99.91880800225772,
+          101.005920994794,
+          100.64199098269455,
+          100.20487700239755,
+          99.88902101758868,
+          99.89204700104892,
+          99.98744199401699,
+          100.44250002829358,
+          100.23731598630548,
+          100.12654500314966,
+          100.15351499896497,
+          100.00273899640888
+        ],
+        "vae_decode_ms": 131.81983400136232,
+        "total_ms": 1658.4106130176224
+      }
+    },
+    {
+      "file": "images/001.png",
+      "prompt": "Make an 8bit version of the grand canyon with meteors raining down from the sky exploding on the ground",
+      "metrics": {
+        "lpips": 0.2678033113479614,
+        "psnr": 23.794917508904657,
+        "dreamsim": 0.08492422103881836
+      },
+      "timings": {
+        "text_encoder_ms": 2.143161022104323,
+        "text_encoder_2_ms": 4.680407990235835,
+        "unet_step_ms": [
+          100.81092399195768,
+          100.74593301396817,
+          99.96982698794454,
+          99.91116300807334,
+          100.3436460159719,
+          99.78525701444596,
+          99.87145999912173,
+          99.78009498445317,
+          99.79515502345748,
+          99.66667299158871,
+          99.70482598873787,
+          99.74571000202559,
+          99.7984429995995,
+          99.76488500251435,
+          100.27375200297683
+        ],
+        "vae_decode_ms": 132.61551698087715,
+        "total_ms": 1653.052731999196
+      }
+    },
+    {
+      "file": "images/002.png",
+      "prompt": "a portrait of a wolf family in the swedish woods life style stock image popular no text prompt trend. pinterest contest winner ",
+      "metrics": {
+        "lpips": 0.211187481880188,
+        "psnr": 23.025090896610596,
+        "dreamsim": 0.03094625473022461
+      },
+      "timings": {
+        "text_encoder_ms": 2.124274004017934,
+        "text_encoder_2_ms": 4.689555993536487,
+        "unet_step_ms": [
+          101.77912499057129,
+          100.71862800396048,
+          99.97974798898213,
+          99.90085201570764,
+          99.72382700652815,
+          99.61722799926065,
+          99.6642500103917,
+          100.12163198553026,
+          100.0926319975406,
+          99.88896799040958,
+          99.76649098098278,
+          99.69271000591107,
+          99.78083599708043,
+          99.7639870038256,
+          99.76909498800524
+        ],
+        "vae_decode_ms": 132.5762709893752,
+        "total_ms": 1652.7939919906203
+      }
+    },
+    {
+      "file": "images/003.png",
+      "prompt": "foodcourt area with foodtrucks and bench tables at music festival in the park, decorated with warm light, in the woods, without any solid structures",
+      "metrics": {
+        "lpips": 0.295733779668808,
+        "psnr": 23.101914311956694,
+        "dreamsim": 0.06070363521575928
+      },
+      "timings": {
+        "text_encoder_ms": 2.1562440088018775,
+        "text_encoder_2_ms": 4.6537859889213,
+        "unet_step_ms": [
+          99.11503401235677,
+          99.00361200561747,
+          100.11629300424829,
+          100.05563500453718,
+          99.95529099251144,
+          101.21200900175609,
+          100.68971899454482,
+          100.0861529901158,
+          99.95938499923795,
+          99.95207798783667,
+          99.70161199453287,
+          100.16209201421589,
+          99.98094200273044,
+          100.05851398454979,
+          100.14454598422162
+        ],
+        "vae_decode_ms": 132.20272900070995,
+        "total_ms": 1652.9926319781225
+      }
+    },
+    {
+      "file": "images/004.png",
+      "prompt": "An evocative and atmospheric image of a prestigious RollsRoyce Phantom, parked outside a grand, historic mansion in the English countryside during a misty morning. The Phantoms stately presence complements the timeless elegance of the mansion, as the soft light filters through the morning fog. The image captures the essence of British luxury, showcasing the craftsmanship and attention to detail of both the automobile and the architecture. This photograph is rendered in sharp 8K UHD resolution ",
+      "metrics": {
+        "lpips": 0.22932255268096924,
+        "psnr": 21.890131716508392,
+        "dreamsim": 0.04623919725418091
+      },
+      "timings": {
+        "text_encoder_ms": 2.1730189910158515,
+        "text_encoder_2_ms": 4.705525992903858,
+        "unet_step_ms": [
+          100.4348510177806,
+          100.40343398577534,
+          100.00368399778381,
+          99.90269600530155,
+          100.3257910197135,
+          100.04320400184952,
+          100.08118499536067,
+          99.97570401174016,
+          100.02048400929198,
+          100.02864201669581,
+          99.96791198500432,
+          99.95126799913123,
+          100.18767899600789,
+          100.0307240174152,
+          100.50448900437914
+        ],
+        "vae_decode_ms": 131.84923399239779,
+        "total_ms": 1655.0780019897502
+      }
+    },
+    {
+      "file": "images/005.png",
+      "prompt": "portrait of beautiful Arab female made of rockcandy with very shiny long hair looking at camera, intricate detail ",
+      "metrics": {
+        "lpips": 0.45705536007881165,
+        "psnr": 19.897206804227814,
+        "dreamsim": 0.0813416838645935
+      },
+      "timings": {
+        "text_encoder_ms": 2.1974510164000094,
+        "text_encoder_2_ms": 4.689497000072151,
+        "unet_step_ms": [
+          101.19949001818895,
+          100.71645001880825,
+          99.95113601326011,
+          99.92929099826142,
+          99.89394401782192,
+          99.97737300000153,
+          99.9880229937844,
+          100.01699600252323,
+          100.20435901242308,
+          100.00231800950132,
+          100.01429700059816,
+          99.93236299487762,
+          100.0141020049341,
+          99.96110800420865,
+          99.98316000564955
+        ],
+        "vae_decode_ms": 132.87605100777,
+        "total_ms": 1654.7430320060812
+      }
+    },
+    {
+      "file": "images/006.png",
+      "prompt": "mmo ability, world of warcraft, lightning bolt",
+      "metrics": {
+        "lpips": 0.30168360471725464,
+        "psnr": 20.956526304316295,
+        "dreamsim": 0.07212013006210327
+      },
+      "timings": {
+        "text_encoder_ms": 2.1369729947764426,
+        "text_encoder_2_ms": 4.697591008152813,
+        "unet_step_ms": [
+          101.90537699963897,
+          101.10395899391733,
+          100.32147500896826,
+          100.17664000042714,
+          99.95153098134324,
+          100.48658901359886,
+          101.11855898867361,
+          100.56506100227125,
+          99.9522480124142,
+          99.86679698340595,
+          99.92975200293586,
+          100.333826005226,
+          100.19283200381324,
+          99.99208198860288,
+          100.20273400004953
+        ],
+        "vae_decode_ms": 132.33387700165622,
+        "total_ms": 1658.2539670052938
+      }
+    },
+    {
+      "file": "images/007.png",
+      "prompt": "watercolor illustration, no background, seed in ground, seedling, grown plant, stages of growth, progression",
+      "metrics": {
+        "lpips": 0.31865912675857544,
+        "psnr": 18.26780519887937,
+        "dreamsim": 0.05550992488861084
+      },
+      "timings": {
+        "text_encoder_ms": 2.120969002135098,
+        "text_encoder_2_ms": 4.642068000975996,
+        "unet_step_ms": [
+          99.510165018728,
+          99.3491770059336,
+          99.8772699967958,
+          99.72708398709074,
+          100.13639501994476,
+          99.95825999067165,
+          99.8014240176417,
+          99.83312201802619,
+          99.81969799264334,
+          99.85431900713593,
+          99.86256700358354,
+          99.86753200064413,
+          99.89169001346454,
+          99.79933797148988,
+          100.30789600568824
+        ],
+        "vae_decode_ms": 131.5436589939054,
+        "total_ms": 1648.9283779810648
+      }
+    },
+    {
+      "file": "images/008.png",
+      "prompt": "photo architecturale dint\u00e9rieur avec une d\u00e9coration industrielle ",
+      "metrics": {
+        "lpips": 0.261616587638855,
+        "psnr": 20.279672946699524,
+        "dreamsim": 0.06880700588226318
+      },
+      "timings": {
+        "text_encoder_ms": 2.142634999472648,
+        "text_encoder_2_ms": 4.667436005547643,
+        "unet_step_ms": [
+          100.29220997239463,
+          100.53583400440402,
+          99.82848199433647,
+          99.93528301129118,
+          99.84615299617872,
+          99.70240300754085,
+          99.79404497426003,
+          99.7664199967403,
+          100.25967998080887,
+          99.99849399900995,
+          99.92205200251192,
+          99.96550501091406,
+          99.9365659954492,
+          99.83290199306794,
+          99.8832699842751
+        ],
+        "vae_decode_ms": 131.41980799264275,
+        "total_ms": 1650.7529999944381
+      }
+    },
+    {
+      "file": "images/009.png",
+      "prompt": "gloomy lights , a woman in a fancy dress standin in a pool in rain forest, fashion photo, detailed high quality photo,",
+      "metrics": {
+        "lpips": 0.33969905972480774,
+        "psnr": 23.632538701135427,
+        "dreamsim": 0.18381595611572266
+      },
+      "timings": {
+        "text_encoder_ms": 2.110286004608497,
+        "text_encoder_2_ms": 4.681332997279242,
+        "unet_step_ms": [
+          101.25988800427876,
+          101.13789601018652,
+          100.10840301401913,
+          99.96319399215281,
+          99.87900601117872,
+          99.90332700544968,
+          101.11488800612278,
+          100.75745300855488,
+          99.97360099805519,
+          99.88288697786629,
+          99.94713898049667,
+          100.40088600362651,
+          100.13141701347195,
+          100.09759399690665,
+          100.00814701197669
+        ],
+        "vae_decode_ms": 132.92435198673047,
+        "total_ms": 1657.5402960006613
+      }
+    },
+    {
+      "file": "images/010.png",
+      "prompt": "cinematic shot of a clock hovering over a ocean of fire with a moon spotlight shining in the direction of the clock, wall art , hyper realistic 150mm f1.2 ",
+      "metrics": {
+        "lpips": 0.6146146059036255,
+        "psnr": 15.588379491745536,
+        "dreamsim": 0.3830670714378357
+      },
+      "timings": {
+        "text_encoder_ms": 2.138128998922184,
+        "text_encoder_2_ms": 4.695126990554854,
+        "unet_step_ms": [
+          101.80665299412794,
+          100.62825598288327,
+          99.90613901754841,
+          99.88466100185178,
+          99.97896198183298,
+          100.42267898097634,
+          100.36383400438353,
+          100.08932300843298,
+          100.06930099916644,
+          100.08316798484884,
+          99.9907229852397,
+          100.03009700449184,
+          100.0465209945105,
+          100.03766199224629,
+          100.07339101866819
+        ],
+        "vae_decode_ms": 132.88963100058027,
+        "total_ms": 1656.7089809977915
+      }
+    },
+    {
+      "file": "images/011.png",
+      "prompt": "black woman eating smoothie bowl",
+      "metrics": {
+        "lpips": 0.4982925057411194,
+        "psnr": 15.421304614804976,
+        "dreamsim": 0.24045825004577637
+      },
+      "timings": {
+        "text_encoder_ms": 2.2159169893711805,
+        "text_encoder_2_ms": 4.679032979765907,
+        "unet_step_ms": [
+          100.44950997689739,
+          100.1461970154196,
+          100.04262099391781,
+          99.94287299923599,
+          100.00125199439935,
+          99.92919000796974,
+          99.96645600767806,
+          100.00402000150643,
+          100.52259301301092,
+          100.16420899773948,
+          100.13292299117893,
+          100.0593549979385,
+          100.11694801505655,
+          100.02625099150464,
+          100.16941698268056
+        ],
+        "vae_decode_ms": 131.936035992112,
+        "total_ms": 1653.8049630180467
+      }
+    },
+    {
+      "file": "images/012.png",
+      "prompt": "climate crisis in mumbai, 200 years in the future, hitech buildings, advanced technology, homeless people ",
+      "metrics": {
+        "lpips": 0.31221941113471985,
+        "psnr": 23.011561912896713,
+        "dreamsim": 0.057164549827575684
+      },
+      "timings": {
+        "text_encoder_ms": 2.219624991994351,
+        "text_encoder_2_ms": 4.690717003541067,
+        "unet_step_ms": [
+          101.25204399810173,
+          100.87857200414874,
+          100.52115900907665,
+          100.13800300657749,
+          100.06843699375167,
+          99.90474698133767,
+          100.04112997557968,
+          101.22582298936322,
+          100.79054100788198,
+          100.10329601936974,
+          99.96137898997404,
+          99.9911019753199,
+          100.45987801277079,
+          100.1972219964955,
+          100.08878100779839
+        ],
+        "vae_decode_ms": 132.92327299132012,
+        "total_ms": 1658.8496110052802
+      }
+    },
+    {
+      "file": "images/013.png",
+      "prompt": "A peaceful forest path with sun rays shining through the trees. ",
+      "metrics": {
+        "lpips": 0.2534324526786804,
+        "psnr": 24.67877112719377,
+        "dreamsim": 0.07066267728805542
+      },
+      "timings": {
+        "text_encoder_ms": 2.1108550135977566,
+        "text_encoder_2_ms": 4.708316992036998,
+        "unet_step_ms": [
+          101.8801260215696,
+          100.67615599837154,
+          99.88252798211761,
+          99.80637999251485,
+          99.78044699528255,
+          100.23643498425372,
+          100.16570601146668,
+          100.2497139852494,
+          99.80773800634779,
+          99.78634197614156,
+          99.77600601268932,
+          99.86664497409947,
+          99.79181701783091,
+          99.86995998769999,
+          99.85346399480477
+        ],
+        "vae_decode_ms": 132.86646699998528,
+        "total_ms": 1654.241121985251
+      }
+    },
+    {
+      "file": "images/014.png",
+      "prompt": "Seen from aside, huge sabertoothed tiger alphamale, charging, dynamic scene, hyperrealistic, photorealistic, high details, high quality, shot on Nikon D6, Galen Rowell, Peter Lik, Marc Adamus, David Muench, ",
+      "metrics": {
+        "lpips": 0.30471980571746826,
+        "psnr": 22.196739527437558,
+        "dreamsim": 0.033273160457611084
+      },
+      "timings": {
+        "text_encoder_ms": 2.112712973030284,
+        "text_encoder_2_ms": 4.639961000066251,
+        "unet_step_ms": [
+          98.7900790059939,
+          98.30424498068169,
+          99.89460199722089,
+          99.8503839946352,
+          99.82770102215,
+          99.7375079896301,
+          99.77251198142767,
+          99.73554298630916,
+          99.80438501224853,
+          100.3581800032407,
+          100.00254897749983,
+          99.96701899217442,
+          99.8422110278625,
+          99.93787700659595,
+          99.92233398952521
+        ],
+        "vae_decode_ms": 131.85006199637428,
+        "total_ms": 1647.9351230082102
+      }
+    },
+    {
+      "file": "images/015.png",
+      "prompt": "the great outdoors",
+      "metrics": {
+        "lpips": 0.2849172055721283,
+        "psnr": 23.613862118870486,
+        "dreamsim": 0.0485227108001709
+      },
+      "timings": {
+        "text_encoder_ms": 2.1188499813433737,
+        "text_encoder_2_ms": 4.683360020862892,
+        "unet_step_ms": [
+          100.32252600649372,
+          100.27183601050638,
+          100.32978100934997,
+          100.01692501828074,
+          100.07705702446401,
+          100.013699993724,
+          99.95566098950803,
+          101.42926601110958,
+          100.73681201902218,
+          100.08802299853414,
+          99.86985501018353,
+          99.89540799870156,
+          100.3050750005059,
+          100.16267097671516,
+          100.17289299867116
+        ],
+        "vae_decode_ms": 131.8549049901776,
+        "total_ms": 1655.3488270146772
+      }
+    },
+    {
+      "file": "images/016.png",
+      "prompt": "a hyper realistic photo of an old chemistry classroom with a large window and sinister light streaming in. In the classroom there is a chalkboard with many complicated formulas on it and the hindu om sign",
+      "metrics": {
+        "lpips": 0.20944778621196747,
+        "psnr": 21.440444394992944,
+        "dreamsim": 0.034102797508239746
+      },
+      "timings": {
+        "text_encoder_ms": 2.16977801756002,
+        "text_encoder_2_ms": 4.6824000019114465,
+        "unet_step_ms": [
+          101.14119201898575,
+          100.67733100731857,
+          99.91522302152589,
+          99.87426997395232,
+          99.80125399306417,
+          99.77519500534981,
+          100.19714600639418,
+          99.95544701814651,
+          99.89812699495815,
+          99.87923598964699,
+          99.88375901593827,
+          99.90553598618135,
+          99.8546069895383,
+          99.87412000191398,
+          99.8394989874214
+        ],
+        "vae_decode_ms": 133.11058800900355,
+        "total_ms": 1653.7469550094102
+      }
+    },
+    {
+      "file": "images/017.png",
+      "prompt": "A animation full body screengrab of a Homer eating green vegetables in the simpsons living room ",
+      "metrics": {
+        "lpips": 0.2769201397895813,
+        "psnr": 19.4498898840952,
+        "dreamsim": 0.04790383577346802
+      },
+      "timings": {
+        "text_encoder_ms": 2.1044999884907156,
+        "text_encoder_2_ms": 4.698456992628053,
+        "unet_step_ms": [
+          101.85420801280998,
+          100.71202900144272,
+          99.95189899927936,
+          99.91458200966008,
+          99.84484000597149,
+          99.88254998461343,
+          99.90818300866522,
+          99.99545401660725,
+          99.9929360114038,
+          100.44039200874977,
+          100.1376979984343,
+          100.02203698968515,
+          100.18303600372747,
+          100.07186900475062,
+          100.30268400441855
+        ],
+        "vae_decode_ms": 132.5205200118944,
+        "total_ms": 1655.7685640000273
+      }
+    },
+    {
+      "file": "images/018.png",
+      "prompt": "big city bursting into flames, gorillaz style",
+      "metrics": {
+        "lpips": 0.2932659387588501,
+        "psnr": 22.01215361123241,
+        "dreamsim": 0.062519371509552
+      },
+      "timings": {
+        "text_encoder_ms": 2.2079730115365237,
+        "text_encoder_2_ms": 4.673558985814452,
+        "unet_step_ms": [
+          99.56613098620437,
+          99.47026200825348,
+          100.52343999268487,
+          100.0909759895876,
+          99.95801298646256,
+          100.12360897962935,
+          100.0470629951451,
+          99.99021800467744,
+          101.23067800304852,
+          100.71412200341001,
+          100.10946198599413,
+          99.9989919946529,
+          100.48415398341604,
+          100.23037099745125,
+          100.1113929960411
+        ],
+        "vae_decode_ms": 131.96628200239502,
+        "total_ms": 1655.0592689891346
+      }
+    },
+    {
+      "file": "images/019.png",
+      "prompt": "a beautiful green color for good",
+      "metrics": {
+        "lpips": 0.2531135082244873,
+        "psnr": 23.096734768576898,
+        "dreamsim": 0.05403327941894531
+      },
+      "timings": {
+        "text_encoder_ms": 2.2157459752634168,
+        "text_encoder_2_ms": 4.710565001005307,
+        "unet_step_ms": [
+          100.66326500964351,
+          100.70382000412792,
+          100.08183799800463,
+          99.90223398199305,
+          99.92205098387785,
+          99.87962199375033,
+          100.50003801006824,
+          100.16766501939856,
+          100.19788399222307,
+          100.13420399627648,
+          100.06883999449201,
+          100.0651890062727,
+          100.08901101537049,
+          100.13076299219392,
+          100.12423701118678
+        ],
+        "vae_decode_ms": 131.70556200202554,
+        "total_ms": 1654.462253995007
+      }
+    },
+    {
+      "file": "images/020.png",
+      "prompt": "scorcese movie style, real spontaneous color photo still of a hispanic woman. 32 years old, tanned skin and long black hair. eminine dress suits and is constantly armed with a briefcase that manages to combine tribal symbols with black leather corporate elegance, Casino movie mood, ultra detailed, hyper realist, hyper detailed face features, 32K, Megapixel, Backlight, lumen reflections, cinematic lights, contre jour, intricate details, kodak ektachrome 64t, 3D, octane render, 35 mm lens, volumetric, tone mapping, depht of field, ray tracer, ",
+      "metrics": {
+        "lpips": 0.3839596211910248,
+        "psnr": 19.207432815254375,
+        "dreamsim": 0.08442085981369019
+      },
+      "timings": {
+        "text_encoder_ms": 2.224032999947667,
+        "text_encoder_2_ms": 4.73155002691783,
+        "unet_step_ms": [
+          101.39350200188346,
+          100.85067799082026,
+          100.04372900584713,
+          99.98738399008289,
+          100.04278298583813,
+          100.07729500648566,
+          100.0426120008342,
+          100.08582498994656,
+          100.05708201788366,
+          100.56908999104053,
+          100.28008499648422,
+          100.16577801434323,
+          100.26752098929137,
+          100.17066699219868,
+          100.09063800680451
+        ],
+        "vae_decode_ms": 132.9297929769382,
+        "total_ms": 1658.6394989863038
+      }
+    },
+    {
+      "file": "images/021.png",
+      "prompt": "a drone shot of Berlin at world war II realistic 8k ",
+      "metrics": {
+        "lpips": 0.3174877166748047,
+        "psnr": 25.765329742998347,
+        "dreamsim": 0.06830775737762451
+      },
+      "timings": {
+        "text_encoder_ms": 2.199965005274862,
+        "text_encoder_2_ms": 4.722396988654509,
+        "unet_step_ms": [
+          102.07946400623769,
+          100.79267699620686,
+          100.05649199592881,
+          100.32245301408693,
+          100.0215369858779,
+          99.95953101315536,
+          100.00536000006832,
+          99.91787298349664,
+          101.36975802015513,
+          100.93783301999792,
+          100.46575599699281,
+          99.97632500017062,
+          99.86399300396442,
+          100.3351190011017,
+          100.09416099637747
+        ],
+        "vae_decode_ms": 132.34194400138222,
+        "total_ms": 1658.632631006185
+      }
+    },
+    {
+      "file": "images/022.png",
+      "prompt": "realistic photograph of an eerie mud hole in the jungle, no chance to escape ",
+      "metrics": {
+        "lpips": 0.3553180992603302,
+        "psnr": 25.126380987706337,
+        "dreamsim": 0.09483194351196289
+      },
+      "timings": {
+        "text_encoder_ms": 2.1340879902709275,
+        "text_encoder_2_ms": 4.678772005718201,
+        "unet_step_ms": [
+          100.3943289979361,
+          100.26512600597925,
+          99.91039600572549,
+          99.85806400072761,
+          99.92470900760964,
+          99.91779900155962,
+          100.33313801977783,
+          100.09808599716052,
+          100.00792299979366,
+          99.99595599947497,
+          99.98615301446989,
+          99.98002700740471,
+          100.00267901341431,
+          99.94663699762896,
+          99.98860099585727
+        ],
+        "vae_decode_ms": 131.81719498243183,
+        "total_ms": 1652.2306890110485
+      }
+    },
+    {
+      "file": "images/023.png",
+      "prompt": "green solarenegie panels solarpanels on house in the forest, house auf lichtung 3ds max vray ",
+      "metrics": {
+        "lpips": 0.4966413676738739,
+        "psnr": 18.879928410355085,
+        "dreamsim": 0.12187230587005615
+      },
+      "timings": {
+        "text_encoder_ms": 2.100095007335767,
+        "text_encoder_2_ms": 4.6790049818810076,
+        "unet_step_ms": [
+          101.30980800022371,
+          101.08855701400898,
+          100.07611900800839,
+          99.87679700134322,
+          99.93902299902402,
+          99.84009197796695,
+          99.94245300185867,
+          99.95749898371287,
+          99.96301698265597,
+          99.97934300918132,
+          100.52673798054457,
+          100.31028700177558,
+          100.0404329970479,
+          100.00428999774158,
+          100.0114560010843
+        ],
+        "vae_decode_ms": 132.8816699970048,
+        "total_ms": 1655.5687290092465
+      }
+    },
+    {
+      "file": "images/024.png",
+      "prompt": "create a luxury modern home on a large lot, utah landscape, mountains in background, park city mountain home, highest detail photo, everything in focus, sharp image, natural daylight, luxury home, architectural lines and details, clean lines ",
+      "metrics": {
+        "lpips": 0.22424563765525818,
+        "psnr": 20.90419692415548,
+        "dreamsim": 0.042920589447021484
+      },
+      "timings": {
+        "text_encoder_ms": 2.1465290046762675,
+        "text_encoder_2_ms": 4.685785999754444,
+        "unet_step_ms": [
+          101.87018400756642,
+          101.13752601318993,
+          99.94126201490872,
+          100.44907699921168,
+          100.18838598625734,
+          100.25680699618533,
+          100.11608200147748,
+          100.0633499934338,
+          100.01494700554758,
+          101.26739798579365,
+          100.86157999467105,
+          100.09236799669452,
+          100.03396699903533,
+          100.50795300048776,
+          100.3005469974596
+        ],
+        "vae_decode_ms": 132.67362900660373,
+        "total_ms": 1660.3063340007793
+      }
+    },
+    {
+      "file": "images/025.png",
+      "prompt": "A real life photo of a large glass bowl full of fresh, juicy strawberries with a thick layer of white cream on top and a tall glass mug filled with delicious strawberry milkshake, complete with chunks of strawberries floating inside. Place the bowl and the glass on a rustic wooden table set against the backdrop of a serene blue lake, with light green trees dotting the shoreline in the distance and saturated blue sky. Place few colorful field flowers scattered on the table to add extra colors and rustical character to the scene. Place more strawberries scattered on the wooden table, adding a touch of playfulness and spontaneity to the scene. The natural afternoon sunlight on a hot summer day creates a soft and warm glow, casting shadows on the strawberries and highlighting the frothy pink milkshake. The photo was taken with a Nikon D5100 camera, using an aperture of f2.8, ISO 400, and a shutter speed of 1100 sec to create a shallow depth of field, drawing the viewers attention to the main subject of the photo  the delicious strawberries on the table. Aim to achieve a clean and crisp image with vibrant colors and natural lighting, reminiscent of the perfect summer day. For inspiration, draw from the work of acclaimed food photographer Marte Marie Forsberg, whose signature style emphasizes the beauty and simplicity of natural ingredients in a fresh and modern way. UHD dtm HDR 8k. ",
+      "metrics": {
+        "lpips": 0.3323220908641815,
+        "psnr": 18.448033159861765,
+        "dreamsim": 0.0940173864364624
+      },
+      "timings": {
+        "text_encoder_ms": 2.20270999125205,
+        "text_encoder_2_ms": 4.694628994911909,
+        "unet_step_ms": [
+          100.03071397659369,
+          99.38968298956752,
+          100.0533830083441,
+          99.99473701464012,
+          99.98978400835767,
+          100.00469000078738,
+          100.4676379961893,
+          100.19870600081049,
+          100.15112900873646,
+          100.17896900535561,
+          100.12861300492659,
+          100.10967598645948,
+          100.18431500066072,
+          100.09451900259592,
+          100.11492899502628
+        ],
+        "vae_decode_ms": 131.85460801469162,
+        "total_ms": 1655.9229709964711
+      }
+    },
+    {
+      "file": "images/026.png",
+      "prompt": "New Fiat Campervan parking on a mountain. photo ",
+      "metrics": {
+        "lpips": 0.31027668714523315,
+        "psnr": 20.0087211686979,
+        "dreamsim": 0.04291272163391113
+      },
+      "timings": {
+        "text_encoder_ms": 2.2107409895397723,
+        "text_encoder_2_ms": 4.678547993535176,
+        "unet_step_ms": [
+          100.78443301608786,
+          100.59193900087848,
+          100.08072399068624,
+          100.01052101142704,
+          99.9728379829321,
+          99.97437300626189,
+          100.14188100467436,
+          100.06463099853136,
+          100.00717799994163,
+          100.02745399833657,
+          100.43692801264115,
+          100.53462799987756,
+          100.50406999653205,
+          100.2701090183109,
+          100.08774898597039
+        ],
+        "vae_decode_ms": 131.70861700200476,
+        "total_ms": 1655.342220008606
+      }
+    },
+    {
+      "file": "images/027.png",
+      "prompt": "a talking apocalypse survivor with a carp in his hand, realistic, UHD, 4K, cin\u00e9 style",
+      "metrics": {
+        "lpips": 0.508289635181427,
+        "psnr": 18.56127385929908,
+        "dreamsim": 0.21815240383148193
+      },
+      "timings": {
+        "text_encoder_ms": 2.129781001713127,
+        "text_encoder_2_ms": 4.697236989159137,
+        "unet_step_ms": [
+          101.44113501883112,
+          100.62278900295496,
+          99.95495999464765,
+          100.36042198771611,
+          100.12483299942687,
+          100.02384500694461,
+          99.90083400043659,
+          99.93243200005963,
+          99.99244299251586,
+          100.74646698194556,
+          101.127219008049,
+          100.55111601832323,
+          99.9980240012519,
+          100.31032300321385,
+          100.13176000211388
+        ],
+        "vae_decode_ms": 132.89737998275086,
+        "total_ms": 1658.256487979088
+      }
+    },
+    {
+      "file": "images/028.png",
+      "prompt": "leaderboard ui design for a fantasy sports game, website design, uiux, sharp, detailed ",
+      "metrics": {
+        "lpips": 0.2878468334674835,
+        "psnr": 21.18218464346242,
+        "dreamsim": 0.12561112642288208
+      },
+      "timings": {
+        "text_encoder_ms": 2.1430769993457943,
+        "text_encoder_2_ms": 4.697217984357849,
+        "unet_step_ms": [
+          101.92571498919278,
+          100.75118602253497,
+          99.96626299107447,
+          99.83198999543674,
+          99.91412298404612,
+          99.89520598901436,
+          99.79890001704916,
+          100.24657400208525,
+          100.09168300894089,
+          99.99685399816372,
+          100.14620202127844,
+          100.09452499798499,
+          99.96218100422993,
+          100.0391079869587,
+          100.07298600976355
+        ],
+        "vae_decode_ms": 132.44753499748185,
+        "total_ms": 1655.0089060037863
+      }
+    },
+    {
+      "file": "images/029.png",
+      "prompt": "frutes and vegetables swimming in water, top view ",
+      "metrics": {
+        "lpips": 0.32439079880714417,
+        "psnr": 20.565508579873782,
+        "dreamsim": 0.06845903396606445
+      },
+      "timings": {
+        "text_encoder_ms": 2.146168000763282,
+        "text_encoder_2_ms": 4.661369021050632,
+        "unet_step_ms": [
+          100.73162001208402,
+          100.0973540067207,
+          100.02467798767611,
+          99.91690100287087,
+          99.86631700303406,
+          99.76127999834716,
+          99.51286599971354,
+          99.4837959879078,
+          99.5208999956958,
+          99.49029999552295,
+          99.89924600813538,
+          99.74218902061693,
+          99.66466200421564,
+          99.4825910020154,
+          99.54863900202326
+        ],
+        "vae_decode_ms": 131.1838570109103,
+        "total_ms": 1647.603902994888
+      }
+    },
+    {
+      "file": "images/030.png",
+      "prompt": "Portrait of a heroic Medieval English commander, noble warrior with battle hardened appearance, fierce presence, sepia, wet plate ",
+      "metrics": {
+        "lpips": 0.28774163126945496,
+        "psnr": 21.912813528249337,
+        "dreamsim": 0.07131922245025635
+      },
+      "timings": {
+        "text_encoder_ms": 2.112095011398196,
+        "text_encoder_2_ms": 4.681331018218771,
+        "unet_step_ms": [
+          100.31537502072752,
+          100.7013029884547,
+          99.94014099356718,
+          99.82568398118019,
+          100.24667897960171,
+          100.08191701490432,
+          100.04051600117236,
+          100.15467199264094,
+          99.9728959868662,
+          99.99254197464325,
+          101.20026898221113,
+          100.71637999499217,
+          100.22560699144378,
+          99.90764100803062,
+          100.25738799595274
+        ],
+        "vae_decode_ms": 132.97100699855946,
+        "total_ms": 1656.5929710050113
+      }
+    },
+    {
+      "file": "images/031.png",
+      "prompt": "Lancia Delta HF Integrale racing on gravel, in superfast motion, in tight turn, in huge cloud of dust, forest in background, ",
+      "metrics": {
+        "lpips": 0.24923402070999146,
+        "psnr": 22.706380763481306,
+        "dreamsim": 0.03519082069396973
+      },
+      "timings": {
+        "text_encoder_ms": 2.1537590073421597,
+        "text_encoder_2_ms": 4.708239022875205,
+        "unet_step_ms": [
+          101.90274700289592,
+          100.71092200814746,
+          99.94797900435515,
+          99.85746699385345,
+          99.72588700475171,
+          99.56504602450877,
+          99.64370299712755,
+          100.05749799893238,
+          99.88516199518926,
+          99.69245601678267,
+          99.68450502492487,
+          99.58336799172685,
+          100.3853949951008,
+          100.10430600959808,
+          100.175165978726
+        ],
+        "vae_decode_ms": 132.9721419897396,
+        "total_ms": 1654.092123004375
+      }
+    },
+    {
+      "file": "images/032.png",
+      "prompt": "detailed fire texture glowing coals orange embers sparks ",
+      "metrics": {
+        "lpips": 0.24978071451187134,
+        "psnr": 21.7051421598924,
+        "dreamsim": 0.045137226581573486
+      },
+      "timings": {
+        "text_encoder_ms": 2.214498003013432,
+        "text_encoder_2_ms": 4.703735001385212,
+        "unet_step_ms": [
+          99.64571398450062,
+          99.81237701140344,
+          100.22040898911655,
+          99.86504699918441,
+          99.83153297798708,
+          99.91717399680056,
+          99.96652300469577,
+          99.94463101611473,
+          99.96813198085874,
+          99.97465199558064,
+          99.92826599045657,
+          100.49105298821814,
+          100.17463899566792,
+          100.12469498906285,
+          100.27840998372994
+        ],
+        "vae_decode_ms": 132.22384999971837,
+        "total_ms": 1652.3091970011592
+      }
+    },
+    {
+      "file": "images/033.png",
+      "prompt": "A beautiful girl, swimsuit, kawaii pose, waifu, detailed, f22, cinematic pose, beautiful face, long hair, wet, ",
+      "metrics": {
+        "lpips": 0.4511546194553375,
+        "psnr": 16.746921838867745,
+        "dreamsim": 0.13491451740264893
+      },
+      "timings": {
+        "text_encoder_ms": 2.1364850108511746,
+        "text_encoder_2_ms": 4.673788993386552,
+        "unet_step_ms": [
+          100.45223002089188,
+          100.34764901502058,
+          100.00684799160808,
+          99.85310299089178,
+          100.28767999028787,
+          100.04951999871992,
+          100.1341650262475,
+          100.09394501685165,
+          99.96846699505113,
+          99.967212008778,
+          99.94229100993834,
+          101.31536799599417,
+          100.70333100156859,
+          100.15133800334297,
+          100.89648599387147
+        ],
+        "vae_decode_ms": 131.97613100055605,
+        "total_ms": 1656.3878660090268
+      }
+    },
+    {
+      "file": "images/034.png",
+      "prompt": "Celestial beings with translucent wings5 hovering above a serene, misty lake4 ethereal aura surrounding them, casting a gentle glow5 otherworldly appearance with soft, iridescent colors3 peaceful and mysterious atmosphere4 ",
+      "metrics": {
+        "lpips": 0.23786504566669464,
+        "psnr": 26.41455991390563,
+        "dreamsim": 0.04507577419281006
+      },
+      "timings": {
+        "text_encoder_ms": 2.1222959912847728,
+        "text_encoder_2_ms": 4.688185988925397,
+        "unet_step_ms": [
+          101.20319400448352,
+          100.70986300706863,
+          100.27626500232145,
+          102.14812197955325,
+          100.92156601604074,
+          99.8398170049768,
+          99.76169597939588,
+          99.69089401420206,
+          100.6435019953642,
+          100.50165298162028,
+          100.21917699486949,
+          99.98170100152493,
+          99.90138199646026,
+          99.61297002155334,
+          99.66204600641504
+        ],
+        "vae_decode_ms": 132.49511297908612,
+        "total_ms": 1657.9642569995485
+      }
+    },
+    {
+      "file": "images/035.png",
+      "prompt": "a logo for a software development company inspired by an orange",
+      "metrics": {
+        "lpips": 0.2741839289665222,
+        "psnr": 20.028210543665217,
+        "dreamsim": 0.05001699924468994
+      },
+      "timings": {
+        "text_encoder_ms": 2.132568013621494,
+        "text_encoder_2_ms": 4.697933996794745,
+        "unet_step_ms": [
+          101.9439619849436,
+          101.35304200230166,
+          100.21194099681452,
+          99.94959901086986,
+          100.06153298309073,
+          99.90848097368143,
+          100.01198999816552,
+          99.95915798936039,
+          99.9871020030696,
+          100.0271899974905,
+          99.98510000878014,
+          100.36275000311434,
+          100.40860300068744,
+          100.07923599914648,
+          100.07070901338011
+        ],
+        "vae_decode_ms": 132.52836701576598,
+        "total_ms": 1656.7547259910498
+      }
+    },
+    {
+      "file": "images/036.png",
+      "prompt": "a toxic rennaissance painting",
+      "metrics": {
+        "lpips": 0.2893156409263611,
+        "psnr": 26.63797695038695,
+        "dreamsim": 0.0791250467300415
+      },
+      "timings": {
+        "text_encoder_ms": 2.1290460135787725,
+        "text_encoder_2_ms": 4.654386983020231,
+        "unet_step_ms": [
+          99.52066699042916,
+          99.49670999776572,
+          99.99153699027374,
+          99.95775698916987,
+          100.35580798285082,
+          100.16223802813329,
+          100.12812199420296,
+          100.0164250144735,
+          100.0226789910812,
+          100.07975998451002,
+          100.13074398739263,
+          101.30904201650992,
+          100.81575100775808,
+          100.17500800313428,
+          100.44227400794625
+        ],
+        "vae_decode_ms": 131.82187802158296,
+        "total_ms": 1654.298617009772
+      }
+    },
+    {
+      "file": "images/037.png",
+      "prompt": "pink and white caladenia orchids heathland Australia 45 macrophotography",
+      "metrics": {
+        "lpips": 0.2666279077529907,
+        "psnr": 21.330859088739714,
+        "dreamsim": 0.07231521606445312
+      },
+      "timings": {
+        "text_encoder_ms": 2.1406060259323567,
+        "text_encoder_2_ms": 4.664602020056918,
+        "unet_step_ms": [
+          100.40112998103723,
+          100.707022997085,
+          100.03252199385315,
+          99.94679302326404,
+          99.89599700202234,
+          99.57882200251333,
+          99.59082899149507,
+          99.57601700443774,
+          100.11142701841891,
+          99.83848498086445,
+          99.75854499498382,
+          99.77052500471473,
+          99.67273799702525,
+          99.63807000895031,
+          99.69383900170214
+        ],
+        "vae_decode_ms": 131.44395902054384,
+        "total_ms": 1649.4358549825847
+      }
+    },
+    {
+      "file": "images/038.png",
+      "prompt": "Carol Danvers, Marvel, Brie Larson, waifu, with a luxury body suits, heavily bodyfitted, front view, beautiful, attractive, perfect body, standing in the dark storm, rain, water drop, natural lighting, wallpaper, anime screenshot, hyperrealistic, pale skin, beautiful face, rule of thirds, extreme detail, detailed drawing, trending artstation, hd, fantasy, realistic rim lighting, sharp focus, backlit, photorealism ",
+      "metrics": {
+        "lpips": 0.29473525285720825,
+        "psnr": 19.9030256661069,
+        "dreamsim": 0.0664217472076416
+      },
+      "timings": {
+        "text_encoder_ms": 2.127960993675515,
+        "text_encoder_2_ms": 4.693455994129181,
+        "unet_step_ms": [
+          101.21635600808077,
+          101.9819289795123,
+          100.17840799991973,
+          100.05989400087856,
+          99.97004899196327,
+          99.95562100084499,
+          99.97922898037359,
+          99.96251299162395,
+          99.99516198877245,
+          100.04326602211222,
+          100.05468499730341,
+          100.42111200164072,
+          100.15542898327112,
+          100.21207600948401,
+          100.07337800925598
+        ],
+        "vae_decode_ms": 132.9414630017709,
+        "total_ms": 1658.187737019034
+      }
+    },
+    {
+      "file": "images/039.png",
+      "prompt": "A 1990s and ancient greece type fashion candid street photograph taken by Mary Ellen Mark and Diane Arbus and Josef Koudelka with an ultrawide lens  high detailed shot with Kodachrome film and flash, in the style of Gustav Klimt, chiaroscuro, attractive and cute family of Saoirsa Ronan lookalikes, brazilian asian mixed races fashion models in a modern cosy bedroom decorated with flowers and pantone colours, wearing golden jewellery and complex tattoos, oversized fluffy halloween costumes, diamond and metallic accessories, fashionable make  up, wedding at atmosphere, attractive and cute modern people, slim bodies and broad chests with tattoos, hipster fashion with metallic details, no hands visible, hairstyling, storm and lightning, looking curiously at me, brazilian house interior and folklore, attractive and fashionable and professionally posing models, insanely detailed and photorealistic faces, f1. 8 bokeh, hypermaximalist portrait, elegant and appealing, ",
+      "metrics": {
+        "lpips": 0.6113492846488953,
+        "psnr": 16.338244339456317,
+        "dreamsim": 0.3216421604156494
+      },
+      "timings": {
+        "text_encoder_ms": 2.1183890057727695,
+        "text_encoder_2_ms": 4.717307019745931,
+        "unet_step_ms": [
+          101.88173601636663,
+          101.16049300995655,
+          100.02169400104322,
+          99.8041520069819,
+          99.8731610015966,
+          100.2974750008434,
+          100.4184509802144,
+          100.03388198674656,
+          100.05541300051846,
+          100.07010700064711,
+          100.15439099515788,
+          100.0867509865202,
+          101.3000929960981,
+          100.7879989920184,
+          100.09588400134817
+        ],
+        "vae_decode_ms": 132.82101598451845,
+        "total_ms": 1660.7513760100119
+      }
+    },
+    {
+      "file": "images/040.png",
+      "prompt": "Claire from outlander with shoulder length dark curly hair doing a Rosie the riveter pose ",
+      "metrics": {
+        "lpips": 0.30766186118125916,
+        "psnr": 20.297540450044448,
+        "dreamsim": 0.07859331369400024
+      },
+      "timings": {
+        "text_encoder_ms": 2.1102650207467377,
+        "text_encoder_2_ms": 4.675202973885462,
+        "unet_step_ms": [
+          100.79041100107133,
+          100.33214100985788,
+          100.07849198882468,
+          99.96235099970363,
+          100.02682998310775,
+          99.98254899983294,
+          100.058612995781,
+          100.06934599368833,
+          100.4068210022524,
+          100.15186798409559,
+          100.05253902636468,
+          100.03845699247904,
+          100.06921199965291,
+          100.06499500013888,
+          100.06288401200436
+        ],
+        "vae_decode_ms": 131.81483701919205,
+        "total_ms": 1653.973213979043
+      }
+    },
+    {
+      "file": "images/041.png",
+      "prompt": "a tiny fire breathing dragon balancing on the tip of a bright orange flower, mouth open blowing fire, highly detailed macro photography, water droplets and dew reflected on the petals, scary, beautiful scene, surreal photo, dramatic lighting, dynamic composition, ultrahigh definition, 8K, blue, orange ",
+      "metrics": {
+        "lpips": 0.20428866147994995,
+        "psnr": 22.993196277837225,
+        "dreamsim": 0.05140531063079834
+      },
+      "timings": {
+        "text_encoder_ms": 2.1112410177011043,
+        "text_encoder_2_ms": 4.686006985139102,
+        "unet_step_ms": [
+          100.88784201070666,
+          100.70667599211447,
+          100.49295600038022,
+          100.11623500031419,
+          100.05071901832707,
+          99.9953800055664,
+          100.01373401610181,
+          99.99307899852283,
+          100.0395079900045,
+          100.09373200591654,
+          100.05960398120806,
+          100.11116700479761,
+          100.51141801523045,
+          100.24726099800318,
+          100.16617301153019
+        ],
+        "vae_decode_ms": 132.9289429995697,
+        "total_ms": 1656.693313998403
+      }
+    },
+    {
+      "file": "images/042.png",
+      "prompt": "outside wall demolished, Gregory Crewdson style photo shoot of an old man sitting at a table eating in an abandoned kitchen, wall demolished, wall demolished, light rays from a hole in the wall, whole room in view, wall demolished, blue hour, twilight, ultra realistic, sharp details, wall demolished, nighttime photography, Gregory Crewdson style of photography, photographed by Gregory Crewdson, Hasselblad 500c, velvia film 400 ",
+      "metrics": {
+        "lpips": 0.31831350922584534,
+        "psnr": 20.871873045852936,
+        "dreamsim": 0.1478891372680664
+      },
+      "timings": {
+        "text_encoder_ms": 2.1259390050545335,
+        "text_encoder_2_ms": 4.705854982603341,
+        "unet_step_ms": [
+          102.00185401481576,
+          100.82816600333899,
+          100.09554200223647,
+          99.93198799202219,
+          99.61181599646807,
+          99.88923501805402,
+          99.77918001823127,
+          99.81721101212315,
+          99.81933201197535,
+          99.76790202199481,
+          99.66522399918176,
+          99.63574400171638,
+          101.18295397842303,
+          100.79457200481556,
+          100.09248199639842
+        ],
+        "vae_decode_ms": 133.12575197778642,
+        "total_ms": 1656.8655970040709
+      }
+    },
+    {
+      "file": "images/043.png",
+      "prompt": "Lady Luciano Ladling Linguini Laboriously ",
+      "metrics": {
+        "lpips": 0.26711469888687134,
+        "psnr": 23.98976927818063,
+        "dreamsim": 0.07867324352264404
+      },
+      "timings": {
+        "text_encoder_ms": 2.2961010108701885,
+        "text_encoder_2_ms": 4.653953976230696,
+        "unet_step_ms": [
+          99.53899099491537,
+          98.94496298511513,
+          100.07659398252144,
+          99.93259300244972,
+          99.96523501467891,
+          99.79956701863557,
+          99.65247800573707,
+          99.61359499720857,
+          99.60292500909418,
+          100.08522399584763,
+          99.8954109963961,
+          99.75610699621029,
+          99.95905199320987,
+          99.78362297988497,
+          99.78655198938213
+        ],
+        "vae_decode_ms": 131.76386800478213,
+        "total_ms": 1648.1040919898078
+      }
+    },
+    {
+      "file": "images/044.png",
+      "prompt": "medieval fantasy, medieval baths, medieval cut masonry architecture, a high raised pool made of stone on a raised granite pedestal, granite floor, steam rising from the pool, night, candles and lanterns, ominous light, lively atmosphere, detailed illustration, intricate, zbrush, high dynamic light, raytracing, unreal engine, octane render, beautiful color palette, hyper realistic, incredible details, ",
+      "metrics": {
+        "lpips": 0.29032963514328003,
+        "psnr": 25.54641992770168,
+        "dreamsim": 0.11048662662506104
+      },
+      "timings": {
+        "text_encoder_ms": 2.107803011313081,
+        "text_encoder_2_ms": 4.695973999332637,
+        "unet_step_ms": [
+          100.31233599875122,
+          100.48441600520164,
+          100.54927101009525,
+          100.08864899282344,
+          100.05250398535281,
+          100.09412199724466,
+          99.99655600404367,
+          100.10867597884499,
+          100.11519401450641,
+          100.13954300666228,
+          100.07194199715741,
+          100.13741001603194,
+          100.50077602500096,
+          100.25399399455637,
+          100.15306499553844
+        ],
+        "vae_decode_ms": 131.91768401884474,
+        "total_ms": 1655.6060099974275
+      }
+    },
+    {
+      "file": "images/045.png",
+      "prompt": "cup of espresso with crema picturing a lion head",
+      "metrics": {
+        "lpips": 0.2702969014644623,
+        "psnr": 18.038919544070914,
+        "dreamsim": 0.07318985462188721
+      },
+      "timings": {
+        "text_encoder_ms": 2.1166810183785856,
+        "text_encoder_2_ms": 4.693751019658521,
+        "unet_step_ms": [
+          101.31431400077417,
+          100.78913799952716,
+          100.13149000587873,
+          99.95863799122162,
+          99.77832101867534,
+          99.98826301307417,
+          99.75053000380285,
+          99.73979298956692,
+          99.65415301849134,
+          99.64979498181492,
+          99.695384997176,
+          99.81728199636564,
+          99.98752601677552,
+          101.4416039979551,
+          100.92136799357831
+        ],
+        "vae_decode_ms": 133.2990659866482,
+        "total_ms": 1656.033715000376
+      }
+    },
+    {
+      "file": "images/046.png",
+      "prompt": "UI, a Korean celebrity, stands on a rooftop at sunset, wearing a black leather jacket and holding a guitar, with the city skyline in the background. The rooftop is decorated with strings of lights and potted plants, giving it a cozy and intimate vibe. The atmosphere is bittersweet and nostalgic, with UI lost in thought as they play a melody on the guitar. Photography using a portrait lens with warm tones and a slight blur to give a dreamy effect. ",
+      "metrics": {
+        "lpips": 0.4448131024837494,
+        "psnr": 16.58604884538917,
+        "dreamsim": 0.36691832542419434
+      },
+      "timings": {
+        "text_encoder_ms": 2.182985015679151,
+        "text_encoder_2_ms": 4.7179749817587435,
+        "unet_step_ms": [
+          101.97694500675425,
+          100.83930200198665,
+          100.12822700082324,
+          99.9570109997876,
+          100.0686869956553,
+          99.98413099674508,
+          100.09425398311578,
+          100.16350101795979,
+          100.12253897730261,
+          100.52902300958522,
+          100.30309201101772,
+          100.20670399535447,
+          99.75937299896032,
+          99.73380898009054,
+          99.8523110174574
+        ],
+        "vae_decode_ms": 131.973156996537,
+        "total_ms": 1656.9544179947115
+      }
+    },
+    {
+      "file": "images/047.png",
+      "prompt": "funny image of a cool dog wearing shades ",
+      "metrics": {
+        "lpips": 0.24829348921775818,
+        "psnr": 21.213180336727937,
+        "dreamsim": 0.041143178939819336
+      },
+      "timings": {
+        "text_encoder_ms": 2.1944280015304685,
+        "text_encoder_2_ms": 4.668314999435097,
+        "unet_step_ms": [
+          99.68067202134989,
+          99.71118799876422,
+          100.53966598934494,
+          100.10973399039358,
+          100.08061400731094,
+          100.05945601733401,
+          100.19808597280644,
+          100.14133699587546,
+          100.1000470132567,
+          100.08837800705805,
+          100.1772329909727,
+          100.17169298953377,
+          100.64351401524618,
+          100.35510300076567,
+          100.30625597573817
+        ],
+        "vae_decode_ms": 131.9901210081298,
+        "total_ms": 1654.3963750009425
+      }
+    },
+    {
+      "file": "images/048.png",
+      "prompt": "Create Tropical design, tropical colors, hd, 8k",
+      "metrics": {
+        "lpips": 0.2673996090888977,
+        "psnr": 19.107612727378985,
+        "dreamsim": 0.06258141994476318
+      },
+      "timings": {
+        "text_encoder_ms": 2.1854459773749113,
+        "text_encoder_2_ms": 4.694599017966539,
+        "unet_step_ms": [
+          101.11096999025904,
+          100.96944798715413,
+          100.20527799497359,
+          100.03283500554971,
+          100.08778801420704,
+          100.04996400675736,
+          100.46216001501307,
+          100.17246901406907,
+          100.13311999500729,
+          100.09125201031566,
+          100.0626570021268,
+          100.11608101194724,
+          100.15866500907578,
+          100.83100598421879,
+          101.23188502620906
+        ],
+        "vae_decode_ms": 133.36249499116093,
+        "total_ms": 1659.2348119884264
+      }
+    },
+    {
+      "file": "images/049.png",
+      "prompt": "vibrant rainforest setting, with tall trees and a variety of lush vegetation. The foliage is abundant, displaying shades of lush greens, vibrant blues, and hints of other vibrant colors. Flowers, vines, and tropical leaves weave through the scene, adding depth and a sense of wonder to the illustration.",
+      "metrics": {
+        "lpips": 0.23341381549835205,
+        "psnr": 23.93085718369067,
+        "dreamsim": 0.03108346462249756
+      },
+      "timings": {
+        "text_encoder_ms": 2.17695499304682,
+        "text_encoder_2_ms": 4.698762000771239,
+        "unet_step_ms": [
+          102.39261100650765,
+          100.875497009838,
+          100.1469049951993,
+          100.06400500424206,
+          100.10468101245351,
+          100.08217301219702,
+          100.01264500897378,
+          100.05592697416432,
+          100.12143600033596,
+          100.4769200226292,
+          100.3188620088622,
+          100.25833299732767,
+          100.14655100530945,
+          100.24741099914536,
+          100.24510600487702
+        ],
+        "vae_decode_ms": 133.0110309936572,
+        "total_ms": 1659.2269749962725
+      }
+    }
+  ]
+}

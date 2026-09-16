@@ -1,0 +1,18 @@
+run deepcache_torch_compile_max_autotune_no_cudagraphs: {'class': 'SDXLPruna', 'model_id': 'stabilityai/stable-diffusion-xl-base-1.0', 'dtype': 'float16', 'smash_config': {'deepcache': True, 'torch_compile': True, 'torch_compile_mode': 'max-autotune-no-cudagraphs'}, 'smash_config_resolved': "SmashConfig(\n  deepcache\n      interval: 2,\n  torch_compile\n      backend: 'inductor',\n      dynamic: None,\n      fullgraph: False,\n      make_portable: False,\n      max_kv_cache_size: 400,\n      mode: 'max-autotune-no-cudagraphs',\n      seqlen_manual_cuda_graph: 100,\n      target: 'model',\n)"}
+A = reference sdxl_base (SDXLBase), B = deepcache_torch_compile_max_autotune_no_cudagraphs (SDXLPruna)
+
+50 image pairs, seed 0
+metric                            mean       std       min       max
+lpips (lower = closer)          0.1513    0.0945    0.0603    0.5879
+dreamsim (lower = closer)       0.0345    0.0450    0.0041    0.2921
+psnr dB (higher = closer)      25.1219    3.8965   16.0749   32.9998
+identical pairs (psnr = inf, excluded above): 0
+
+timing, mean per image (ms)          A         B       A/B
+text_encoder                       2.4       1.7     1.43x
+text_encoder_2                     4.6       4.8     0.97x
+unet, all steps                 7649.4    3724.6     2.05x
+unet step (median)               152.5     143.1     1.07x
+vae decode                       352.1     352.7     1.00x
+other                             70.1      73.7     0.95x
+total                           8078.5    4157.5     1.94x

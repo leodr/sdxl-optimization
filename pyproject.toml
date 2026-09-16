@@ -1,0 +1,31 @@
+[project]
+name = "sdxl-optimization"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Leo Driesch", email = "dev@leodriesch.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "accelerate>=1.15.0",
+    "datasets>=5.0.1",
+    "diffusers>=0.40.0",
+    "dreamsim>=0.2.1",
+    "invisible-watermark>=0.2.0",
+    "ipython>=9.17.1",
+    "lpips>=0.1.4",
+    "pruna>=0.3.4",
+    "safetensors>=0.8.0",
+    "transformers>=5.17.0",
+]
+
+[project.scripts]
+sdxl-optimization = "sdxl_optimization:main"
+
+[build-system]
+requires = ["uv_build>=0.12.1,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv]
+package = false

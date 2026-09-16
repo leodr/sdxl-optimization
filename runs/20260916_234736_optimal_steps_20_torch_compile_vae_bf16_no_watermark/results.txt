@@ -1,0 +1,18 @@
+run optimal_steps_20_torch_compile_vae_bf16_no_watermark: {'class': 'SDXLOptimalStepsFastVAE', 'model_id': 'stabilityai/stable-diffusion-xl-base-1.0', 'dtype': 'float16', 'timesteps': [981, 961, 941, 921, 901, 861, 821, 781, 741, 681, 641, 581, 521, 461, 381, 321, 241, 161, 101, 21], 'schedule_source': 'optimal_steps_sdxl_base_50to20.json', 'smash_config': {'torch_compile': True, 'torch_compile_mode': 'max-autotune-no-cudagraphs'}, 'smash_config_resolved': "SmashConfig(\n  torch_compile\n      backend: 'inductor',\n      dynamic: None,\n      fullgraph: False,\n      make_portable: False,\n      max_kv_cache_size: 400,\n      mode: 'max-autotune-no-cudagraphs',\n      seqlen_manual_cuda_graph: 100,\n      target: 'model',\n)", 'vae_decode_compile_mode': 'max-autotune-no-cudagraphs', 'vae_decode_dtype': 'bfloat16', 'watermark': False}
+A = reference sdxl_base (SDXLBase), B = optimal_steps_20_torch_compile_vae_bf16_no_watermark (SDXLOptimalStepsFastVAE)
+
+50 image pairs, seed 0
+metric                            mean       std       min       max
+lpips (lower = closer)          0.1503    0.0466    0.0765    0.2613
+dreamsim (lower = closer)       0.0223    0.0154    0.0062    0.0943
+psnr dB (higher = closer)      26.5644    2.7509   21.1193   33.8897
+identical pairs (psnr = inf, excluded above): 0
+
+timing, mean per image (ms)          A         B       A/B
+text_encoder                       2.4       2.2     1.11x
+text_encoder_2                     4.6       4.6     1.00x
+unet, all steps                 7649.4    2811.9     2.72x
+unet step (median)               152.5     140.5     1.09x
+vae decode                       352.1     125.1     2.81x
+other                             70.1      14.0     5.02x
+total                           8078.5    2957.7     2.73x

@@ -1,0 +1,18 @@
+run nvfp4_torch_compile_vae_bf16: {'class': 'SDXLNVFP4CompiledVAEBF16', 'model_id': 'stabilityai/stable-diffusion-xl-base-1.0', 'dtype': 'float16', 'vae_decode_dtype': 'bfloat16', 'unet_compile': "torch.compile(unet.forward, mode='max-autotune-no-cudagraphs')", 'vae_decode_compile': "torch.compile(vae.decode, mode='max-autotune-no-cudagraphs')", 'watermark': True, 'nvfp4': {'config': 'NVFP4DynamicActivationNVFP4WeightConfig(use_dynamic_per_tensor_scale=True, use_triton_kernel=True)', 'scope': 'unet nn.Linear, min(in, out) >= 1024, skipping attn2.to_k, attn2.to_v, time_emb_proj, proj_in, time_embedding., add_embedding.', 'weights_quantized_from': 'bfloat16', 'activations': 'cast fp16 -> bf16 before each quantized linear, output cast back to fp16', 'quantized_layers': 486}}
+A = reference sdxl_base (SDXLBase), B = nvfp4_torch_compile_vae_bf16 (SDXLNVFP4CompiledVAEBF16)
+
+50 image pairs, seed 0
+metric                            mean       std       min       max
+lpips (lower = closer)          0.2315    0.1175    0.1002    0.5919
+dreamsim (lower = closer)       0.0698    0.0801    0.0118    0.3691
+psnr dB (higher = closer)      22.0641    3.3448   15.2736   28.8521
+identical pairs (psnr = inf, excluded above): 0
+
+timing, mean per image (ms)          A         B       A/B
+text_encoder                       2.4       2.3     1.05x
+text_encoder_2                     4.6       4.7     0.99x
+unet, all steps                 7649.4    5012.7     1.53x
+unet step (median)               152.5     100.2     1.52x
+vae decode                       352.1     132.5     2.66x
+other                             70.1      65.3     1.07x
+total                           8078.5    5217.4     1.55x

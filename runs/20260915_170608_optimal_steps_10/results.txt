@@ -1,0 +1,18 @@
+run optimal_steps_10: {'class': 'SDXLOptimalSteps', 'model_id': 'stabilityai/stable-diffusion-xl-base-1.0', 'dtype': 'float16', 'timesteps': [981, 941, 901, 841, 781, 721, 601, 401, 221, 61], 'schedule_source': 'optimal_steps_sdxl_base_50to10.json'}
+A = reference sdxl_base (SDXLBase), B = optimal_steps_10 (SDXLOptimalSteps)
+
+50 image pairs, seed 0
+metric                            mean       std       min       max
+lpips (lower = closer)          0.3206    0.0868    0.1934    0.6078
+dreamsim (lower = closer)       0.0712    0.0465    0.0299    0.3181
+psnr dB (higher = closer)      22.5174    2.5387   16.2174   29.1434
+identical pairs (psnr = inf, excluded above): 0
+
+timing, mean per image (ms)          A         B       A/B
+text_encoder                       2.4       2.4     1.02x
+text_encoder_2                     4.6       4.7     0.99x
+unet, all steps                 7649.4    1555.7     4.92x
+unet step (median)               152.5     154.1     0.99x
+vae decode                       352.1     352.4     1.00x
+other                             70.1      67.0     1.05x
+total                           8078.5    1982.2     4.08x

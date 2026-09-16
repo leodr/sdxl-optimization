@@ -1,0 +1,18 @@
+run torch_compile_vae_bf16: {'class': 'SDXLCompiledVAEBF16', 'model_id': 'stabilityai/stable-diffusion-xl-base-1.0', 'dtype': 'float16', 'vae_decode_dtype': 'bfloat16', 'unet_compile': "torch.compile(unet.forward, mode='max-autotune-no-cudagraphs')", 'vae_decode_compile': "torch.compile(vae.decode, mode='max-autotune-no-cudagraphs')", 'watermark': True}
+A = reference sdxl_base (SDXLBase), B = torch_compile_vae_bf16 (SDXLCompiledVAEBF16)
+
+50 image pairs, seed 0
+metric                            mean       std       min       max
+lpips (lower = closer)          0.0081    0.0062    0.0025    0.0331
+dreamsim (lower = closer)       0.0005    0.0010    0.0000    0.0065
+psnr dB (higher = closer)      40.1069    3.2038   32.0134   45.7883
+identical pairs (psnr = inf, excluded above): 0
+
+timing, mean per image (ms)          A         B       A/B
+text_encoder                       2.4       2.3     1.04x
+text_encoder_2                     4.6       4.6     1.00x
+unet, all steps                 7649.4    7087.4     1.08x
+unet step (median)               152.5     141.3     1.08x
+vae decode                       352.1     125.6     2.80x
+other                             70.1      66.7     1.05x
+total                           8078.5    7286.7     1.11x

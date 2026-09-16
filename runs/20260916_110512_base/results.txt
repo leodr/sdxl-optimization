@@ -1,0 +1,17 @@
+run base: {'class': 'SDXLBase', 'model_id': 'stabilityai/stable-diffusion-xl-base-1.0', 'dtype': 'float16'}
+A = reference sdxl_base (SDXLBase), B = base (SDXLBase)
+
+50 image pairs, seed 0
+metric                            mean       std       min       max
+lpips (lower = closer)          0.0000    0.0000    0.0000    0.0000
+dreamsim (lower = closer)      -0.0000    0.0000   -0.0000    0.0000
+identical pairs (psnr = inf, excluded above): 50
+
+timing, mean per image (ms)          A         B       A/B
+text_encoder                       2.4       2.3     1.03x
+text_encoder_2                     4.6       4.6     1.01x
+unet, all steps                 7649.4    7720.7     0.99x
+unet step (median)               152.5     154.1     0.99x
+vae decode                       352.1     353.4     1.00x
+other                             70.1      68.0     1.03x
+total                           8078.5    8149.0     0.99x

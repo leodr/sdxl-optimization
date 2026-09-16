@@ -1,0 +1,10 @@
+component                                             ms   share
+text_encoder (CLIP ViT-L)                            2.2    0.1%
+text_encoder_2 (OpenCLIP ViT-bigG)                   4.8    0.2%
+unet, all 20 steps                                2809.7   95.1%
+vae decode                                         123.8    4.2%
+other (scheduler, image postprocessing, ...)        15.2    0.5%
+pipeline total                                    2955.7
+
+unet single step (ms)
+  first 150.9  mean 140.5  median 139.0  min 137.7  max 150.9

@@ -1,0 +1,18 @@
+run optimal_steps_20_deepcache_nvfp4_torch_compile_vae_bf16_no_watermark: {'class': 'SDXLOptimalStepsDeepCacheNVFP4FastVAE', 'model_id': 'stabilityai/stable-diffusion-xl-base-1.0', 'dtype': 'float16', 'timesteps': [981, 961, 941, 921, 901, 861, 821, 781, 741, 681, 641, 581, 521, 461, 381, 321, 241, 161, 101, 21], 'schedule_source': 'optimal_steps_sdxl_base_50to20.json', 'nvfp4': {'config': 'NVFP4DynamicActivationNVFP4WeightConfig(use_dynamic_per_tensor_scale=True, use_triton_kernel=True)', 'scope': 'unet nn.Linear, min(in, out) >= 1024, skipping attn2.to_k, attn2.to_v, time_emb_proj, proj_in, time_embedding., add_embedding.', 'weights_quantized_from': 'bfloat16', 'activations': 'cast fp16 -> bf16 before each quantized linear, output cast back to fp16', 'quantized_layers': 486}, 'smash_config': {'deepcache': True, 'deepcache_interval': 2, 'torch_compile': True, 'torch_compile_mode': 'max-autotune-no-cudagraphs'}, 'smash_config_resolved': "SmashConfig(\n  deepcache\n      interval: 2,\n  torch_compile\n      backend: 'inductor',\n      dynamic: None,\n      fullgraph: False,\n      make_portable: False,\n      max_kv_cache_size: 400,\n      mode: 'max-autotune-no-cudagraphs',\n      seqlen_manual_cuda_graph: 100,\n      target: 'model',\n)", 'vae_decode_compile_mode': 'max-autotune-no-cudagraphs', 'vae_decode_dtype': 'bfloat16', 'watermark': False}
+A = reference sdxl_base (SDXLBase), B = optimal_steps_20_deepcache_nvfp4_torch_compile_vae_bf16_no_watermark (SDXLOptimalStepsDeepCacheNVFP4FastVAE)
+
+50 image pairs, seed 0
+metric                            mean       std       min       max
+lpips (lower = closer)          0.3620    0.0827    0.2487    0.6348
+dreamsim (lower = closer)       0.1183    0.0744    0.0506    0.3864
+psnr dB (higher = closer)      20.4187    2.6121   14.0709   25.6310
+identical pairs (psnr = inf, excluded above): 0
+
+timing, mean per image (ms)          A         B       A/B
+text_encoder                       2.4       1.6     1.48x
+text_encoder_2                     4.6       4.8     0.97x
+unet, all steps                 7649.4    1041.3     7.35x
+unet step (median)               152.5      99.6     1.53x
+vae decode                       352.1     125.4     2.81x
+other                             70.1      14.1     4.98x
+total                           8078.5    1187.2     6.80x

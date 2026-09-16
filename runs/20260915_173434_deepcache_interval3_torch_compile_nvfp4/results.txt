@@ -1,0 +1,18 @@
+run deepcache_interval3_torch_compile_nvfp4: {'class': 'SDXLPrunaNVFP4', 'model_id': 'stabilityai/stable-diffusion-xl-base-1.0', 'dtype': 'float16', 'smash_config': {'deepcache': True, 'deepcache_interval': 3, 'torch_compile': True}, 'smash_config_resolved': "SmashConfig(\n  deepcache\n      interval: 3,\n  torch_compile\n      backend: 'inductor',\n      dynamic: None,\n      fullgraph: False,\n      make_portable: False,\n      max_kv_cache_size: 400,\n      mode: 'default',\n      seqlen_manual_cuda_graph: 100,\n      target: 'model',\n)", 'nvfp4': {'config': 'NVFP4DynamicActivationNVFP4WeightConfig(use_dynamic_per_tensor_scale=True, use_triton_kernel=True)', 'scope': 'unet nn.Linear, min(in, out) >= 1024, skipping attn2.to_k, attn2.to_v, time_emb_proj, proj_in, time_embedding., add_embedding.', 'weights_quantized_from': 'bfloat16', 'activations': 'cast fp16 -> bf16 before each quantized linear, output cast back to fp16', 'quantized_layers': 486}}
+A = reference sdxl_base (SDXLBase), B = deepcache_interval3_torch_compile_nvfp4 (SDXLPrunaNVFP4)
+
+50 image pairs, seed 0
+metric                            mean       std       min       max
+lpips (lower = closer)          0.3038    0.1108    0.1272    0.6068
+dreamsim (lower = closer)       0.0984    0.0788    0.0235    0.3742
+psnr dB (higher = closer)      20.6499    3.0708   14.0663   28.5348
+identical pairs (psnr = inf, excluded above): 0
+
+timing, mean per image (ms)          A         B       A/B
+text_encoder                       2.4       2.1     1.14x
+text_encoder_2                     4.6       4.8     0.97x
+unet, all steps                 7649.4    1911.9     4.00x
+unet step (median)               152.5       4.3    35.78x
+vae decode                       352.1     352.7     1.00x
+other                             70.1      69.4     1.01x
+total                           8078.5    2340.9     3.45x

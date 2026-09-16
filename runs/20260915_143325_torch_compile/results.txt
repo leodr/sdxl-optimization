@@ -1,0 +1,18 @@
+run torch_compile: {'class': 'SDXLPruna', 'model_id': 'stabilityai/stable-diffusion-xl-base-1.0', 'dtype': 'float16', 'smash_config': ['torch_compile'], 'smash_config_resolved': "SmashConfig(\n  torch_compile\n      backend: 'inductor',\n      dynamic: None,\n      fullgraph: False,\n      make_portable: False,\n      max_kv_cache_size: 400,\n      mode: 'default',\n      seqlen_manual_cuda_graph: 100,\n      target: 'model',\n)"}
+A = reference sdxl_base (SDXLBase), B = torch_compile (SDXLPruna)
+
+50 image pairs, seed 0
+metric                            mean       std       min       max
+lpips (lower = closer)          0.0082    0.0127    0.0016    0.0710
+dreamsim (lower = closer)       0.0007    0.0018    0.0000    0.0113
+psnr dB (higher = closer)      41.0617    4.2046   29.6645   48.4029
+identical pairs (psnr = inf, excluded above): 0
+
+timing, mean per image (ms)          A         B       A/B
+text_encoder                       2.4       2.3     1.05x
+text_encoder_2                     4.6       4.6     1.00x
+unet, all steps                 7649.4    7253.4     1.05x
+unet step (median)               152.5     144.7     1.05x
+vae decode                       352.1     352.9     1.00x
+other                             70.1      72.0     0.97x
+total                           8078.5    7685.2     1.05x

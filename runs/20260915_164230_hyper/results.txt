@@ -1,0 +1,18 @@
+run hyper: {'class': 'SDXLPruna', 'model_id': 'stabilityai/stable-diffusion-xl-base-1.0', 'dtype': 'float16', 'smash_config': ['hyper'], 'smash_config_resolved': 'SmashConfig(\n  hyper\n      agressive: False,\n)'}
+A = reference sdxl_base (SDXLBase), B = hyper (SDXLPruna)
+
+50 image pairs, seed 0
+metric                            mean       std       min       max
+lpips (lower = closer)          0.6138    0.0862    0.4741    0.8044
+dreamsim (lower = closer)       0.2259    0.1050    0.1036    0.5534
+psnr dB (higher = closer)      13.3225    1.4153   10.7260   16.4934
+identical pairs (psnr = inf, excluded above): 0
+
+timing, mean per image (ms)          A         B       A/B
+text_encoder                       2.4       2.4     1.02x
+text_encoder_2                     4.6       4.7     0.99x
+unet, all steps                 7649.4     906.2     8.44x
+unet step (median)               152.5     113.5     1.34x
+vae decode                       352.1     366.9     0.96x
+other                             70.1      76.6     0.92x
+total                           8078.5    1356.7     5.95x

@@ -1,0 +1,27 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Generated images: run images, reference images, lossless grids, one-off generations. The run records
+# (runs/*/run.json, results.txt), references/*/manifest.json and the JPEG grids (grid.jpg) are kept.
+*.png
+!oss_schedule_20_steps.png
+
+# Latents, video and its source frames
+*.safetensors
+*.mp4
+video_frames/
+
+# Captioned images from benchmark.py and warm-up runs (recreated on demand)
+outputs/
+
+# Local tool settings and OS files
+.claude/settings.local.json
+.DS_Store

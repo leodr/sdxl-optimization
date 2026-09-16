@@ -1,0 +1,18 @@
+run optimal_steps_20_nvfp4_torch_compile_vae_bf16_no_watermark: {'class': 'SDXLOptimalStepsNVFP4FastVAE', 'model_id': 'stabilityai/stable-diffusion-xl-base-1.0', 'dtype': 'float16', 'timesteps': [981, 961, 941, 921, 901, 861, 821, 781, 741, 681, 641, 581, 521, 461, 381, 321, 241, 161, 101, 21], 'schedule_source': 'optimal_steps_sdxl_base_50to20.json', 'nvfp4': {'config': 'NVFP4DynamicActivationNVFP4WeightConfig(use_dynamic_per_tensor_scale=True, use_triton_kernel=True)', 'scope': 'unet nn.Linear, min(in, out) >= 1024, skipping attn2.to_k, attn2.to_v, time_emb_proj, proj_in, time_embedding., add_embedding.', 'weights_quantized_from': 'bfloat16', 'activations': 'cast fp16 -> bf16 before each quantized linear, output cast back to fp16', 'quantized_layers': 486}, 'smash_config': {'torch_compile': True, 'torch_compile_mode': 'max-autotune-no-cudagraphs'}, 'smash_config_resolved': "SmashConfig(\n  torch_compile\n      backend: 'inductor',\n      dynamic: None,\n      fullgraph: False,\n      make_portable: False,\n      max_kv_cache_size: 400,\n      mode: 'max-autotune-no-cudagraphs',\n      seqlen_manual_cuda_graph: 100,\n      target: 'model',\n)", 'vae_decode_compile_mode': 'max-autotune-no-cudagraphs', 'vae_decode_dtype': 'bfloat16', 'watermark': False}
+A = reference sdxl_base (SDXLBase), B = optimal_steps_20_nvfp4_torch_compile_vae_bf16_no_watermark (SDXLOptimalStepsNVFP4FastVAE)
+
+50 image pairs, seed 0
+metric                            mean       std       min       max
+lpips (lower = closer)          0.2849    0.1019    0.1605    0.6123
+dreamsim (lower = closer)       0.0825    0.0767    0.0199    0.3767
+psnr dB (higher = closer)      21.6103    3.1169   15.3196   28.0591
+identical pairs (psnr = inf, excluded above): 0
+
+timing, mean per image (ms)          A         B       A/B
+text_encoder                       2.4       2.1     1.16x
+text_encoder_2                     4.6       4.7     0.99x
+unet, all steps                 7649.4    2004.0     3.82x
+unet step (median)               152.5     100.1     1.52x
+vae decode                       352.1     132.4     2.66x
+other                             70.1      14.4     4.86x
+total                           8078.5    2157.6     3.74x

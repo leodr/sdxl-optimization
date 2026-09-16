@@ -1,0 +1,18 @@
+run optimal_steps_10_nvfp4_torch_compile_vae: {'class': 'SDXLOptimalStepsNVFP4', 'model_id': 'stabilityai/stable-diffusion-xl-base-1.0', 'dtype': 'float16', 'timesteps': [981, 941, 901, 841, 781, 721, 601, 401, 221, 61], 'schedule_source': 'optimal_steps_sdxl_base_50to10.json', 'nvfp4': {'config': 'NVFP4DynamicActivationNVFP4WeightConfig(use_dynamic_per_tensor_scale=True, use_triton_kernel=True)', 'scope': 'unet nn.Linear, min(in, out) >= 1024, skipping attn2.to_k, attn2.to_v, time_emb_proj, proj_in, time_embedding., add_embedding.', 'weights_quantized_from': 'bfloat16', 'activations': 'cast fp16 -> bf16 before each quantized linear, output cast back to fp16', 'quantized_layers': 486}, 'smash_config': {'torch_compile': True, 'torch_compile_mode': 'max-autotune-no-cudagraphs'}, 'smash_config_resolved': "SmashConfig(\n  torch_compile\n      backend: 'inductor',\n      dynamic: None,\n      fullgraph: False,\n      make_portable: False,\n      max_kv_cache_size: 400,\n      mode: 'max-autotune-no-cudagraphs',\n      seqlen_manual_cuda_graph: 100,\n      target: 'model',\n)", 'vae_decode_compile_mode': 'max-autotune-no-cudagraphs'}
+A = reference sdxl_base (SDXLBase), B = optimal_steps_10_nvfp4_torch_compile_vae (SDXLOptimalStepsNVFP4)
+
+50 image pairs, seed 0
+metric                            mean       std       min       max
+lpips (lower = closer)          0.3848    0.0871    0.2342    0.6182
+dreamsim (lower = closer)       0.1171    0.0786    0.0467    0.3854
+psnr dB (higher = closer)      20.6503    2.5155   15.7746   25.6166
+identical pairs (psnr = inf, excluded above): 0
+
+timing, mean per image (ms)          A         B       A/B
+text_encoder                       2.4       2.3     1.03x
+text_encoder_2                     4.6       4.7     0.99x
+unet, all steps                 7649.4    1014.8     7.54x
+unet step (median)               152.5     101.4     1.50x
+vae decode                       352.1     295.7     1.19x
+other                             70.1      62.4     1.12x
+total                           8078.5    1380.0     5.85x

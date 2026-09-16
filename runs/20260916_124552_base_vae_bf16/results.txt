@@ -1,0 +1,18 @@
+run base_vae_bf16: {'class': 'SDXLBaseVAEBF16', 'model_id': 'stabilityai/stable-diffusion-xl-base-1.0', 'dtype': 'float16', 'vae_decode_dtype': 'bfloat16'}
+A = reference sdxl_base (SDXLBase), B = base_vae_bf16 (SDXLBaseVAEBF16)
+
+50 image pairs, seed 0
+metric                            mean       std       min       max
+lpips (lower = closer)          0.0035    0.0014    0.0006    0.0079
+dreamsim (lower = closer)       0.0001    0.0000    0.0000    0.0002
+psnr dB (higher = closer)      43.8272    1.5495   40.5835   46.6532
+identical pairs (psnr = inf, excluded above): 0
+
+timing, mean per image (ms)          A         B       A/B
+text_encoder                       2.4       2.3     1.04x
+text_encoder_2                     4.6       4.6     1.00x
+unet, all steps                 7649.4    7718.6     0.99x
+unet step (median)               152.5     154.1     0.99x
+vae decode                       352.1     200.6     1.76x
+other                             70.1      63.3     1.11x
+total                           8078.5    7989.5     1.01x
