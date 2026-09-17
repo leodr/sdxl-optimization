@@ -13,6 +13,7 @@ wheels/
 # (runs/*/run.json, results.txt), references/*/manifest.json and the JPEG grids (grid.jpg) are kept.
 *.png
 !oss_schedule_20_steps.png
+!pareto_speed_lpips.png
 
 # Latents, video and its source frames
 *.safetensors

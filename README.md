@@ -13,6 +13,21 @@ Run a variant with `uv run python src/evaluate.py <variant>`; the variants are d
 Metrics compare each image to the base model's image for the same prompt: LPIPS and DreamSim (lower =
 closer), PSNR in dB (higher = closer). They measure similarity to the base output, not image quality.
 
+## Overview: speed vs fidelity
+
+![Speedup over base SDXL vs mean LPIPS for all runs, with the Pareto frontier and the recommended configurations circled](pareto_speed_lpips.png)
+
+Every run as speedup over the base model against mean LPIPS; the blue line is the Pareto frontier (runs no other
+run beats on both axes). The circled runs are the recommended configurations:
+
+| configuration | variant | ms per image | speedup | mean LPIPS | mean DreamSim |
+|---|---|---:|---:|---:|---:|
+| compile + bf16 VAE (near-identical to base) | `torch_compile_vae_bf16` | 7287 | 1.11x | 0.008 | 0.0005 |
+| OSS 20 + compile + bf16 VAE, no watermark (fast, close to base) | `optimal_steps_20_torch_compile_vae_bf16_no_watermark` | 2958 | 2.73x | 0.150 | 0.022 |
+| OSS 20 + NVFP4 + compile + bf16 VAE, no watermark (fastest recommended) | `optimal_steps_20_nvfp4_torch_compile_vae_bf16_no_watermark` | 2158 | 3.74x | 0.285 | 0.083 |
+
+Redraw the chart after new runs with `uv run --with matplotlib python src/plot_pareto.py`.
+
 ## Base (no optimizations)
 
 `SDXLBase`, variant `base`. Run: `runs/20260915_142608_base/`.
