@@ -15,9 +15,10 @@ wheels/
 !oss_schedule_20_steps.png
 !pareto_speed_lpips.png
 
-# Latents, video and its source frames
+# Latents, video and its source frames. The compressed speed comparison shown in the README is kept.
 *.safetensors
 *.mp4
+!speed_comparison.mp4
 video_frames/
 
 # Captioned images from benchmark.py and warm-up runs (recreated on demand)

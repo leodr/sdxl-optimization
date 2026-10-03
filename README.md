@@ -2,6 +2,12 @@
 
 Optimizations of SDXL base 1.0 (fp16), each compared against the unoptimized base model.
 
+[![Side-by-side generation in real time: the fastest recommended configuration on the left, base SDXL on the right](speed_comparison.gif)](speed_comparison.mp4)
+
+Left: the fastest recommended configuration (`optimal_steps_20_nvfp4_torch_compile_vae_bf16_no_watermark`).
+Right: base SDXL. Each image appears when it finished generating in the timed run. Click for the
+[MP4](speed_comparison.mp4); `src/make_speed_video.py` regenerates it.
+
 **Setup for all results:** 50 prompts from `playgroundai/MJHQ-30K` (5 per category, seed 0), generation
 seed 0, 50 steps, 1024×1024, on an RTX 5080 (nc-11-3-3). Reference images and timings are in
 `references/sdxl_base/`. Timings are wall-clock per image after a warm-up run, including the GPU
